@@ -101,3 +101,27 @@ func IsWhitespace(c rune) bool {
 func IsLowerThanMaxCodePoint(c rune) bool {
 	return c <= 0x10FFFF
 }
+
+// A leading surrogate is a code point that is in the range U+D800 to
+// U+DBFF, inclusive.
+//
+// https://infra.spec.whatwg.org/#leading-surrogate
+func IsLeadingSurrogate(c rune) bool {
+	return c >= 0xD800 && c <= 0xDBFF
+}
+
+// A trailing surrogate is a code point that is in the range U+DC00 to
+// U+DFFF, inclusive.
+//
+// https://infra.spec.whatwg.org/#trailing-surrogate
+func IsTrailingSurrogate(c rune) bool {
+	return c >= 0xDC00 && c <= 0xDFFF
+}
+
+// A surrogate is a leading surrogate [IsLeadingSurrogate] or a trailing
+// surrogate [IsTrailingSurrogate].
+//
+// https://infra.spec.whatwg.org/#surrogate
+func IsSurrogate(c rune) bool {
+	return IsLeadingSurrogate(c) || IsTrailingSurrogate(c)
+}
